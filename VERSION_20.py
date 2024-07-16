@@ -54,32 +54,8 @@ class MotorControlGUI(QMainWindow):
 
         main_grid.addWidget(motor_controls_group, 0, 0, 1, 1)
 
-        # Encoder value display
-        encoder_group = QGroupBox('Encoder Value')
-        encoder_layout = QVBoxLayout()
-        encoder_group.setLayout(encoder_layout)
-
-        self.encoder_value_label = QLabel('Current Encoder Value: N/A')
-        encoder_layout.addWidget(self.encoder_value_label)
-
-        self.read_encoder_button = QPushButton('Read Encoder Value')
-        self.read_encoder_button.clicked.connect(self.read_encoder)
-        encoder_layout.addWidget(self.read_encoder_button)
-
-        main_grid.addWidget(encoder_group, 0, 1, 1, 1)
-
-        # Add entry for Pulses per Rotation
-        pulses_group = QGroupBox('Set Pulses per Rotation')
-        pulses_layout = QVBoxLayout()
-        pulses_group.setLayout(pulses_layout)
-
-        self.pulses_entry = QLineEdit()
-        pulses_layout.addWidget(self.pulses_entry)
-
-        main_grid.addWidget(pulses_group, 0, 2, 1, 1)
-
-        # Timer controls
-        timer_group = QGroupBox('Set Clock For Rotation')
+        # Timer controls and Set Pulses per Rotation
+        timer_group = QGroupBox('Timer and Pulses')
         timer_layout = QGridLayout()
         timer_group.setLayout(timer_layout)
 
@@ -92,8 +68,11 @@ class MotorControlGUI(QMainWindow):
         self.seconds_entry = QLineEdit('00')
         timer_layout.addWidget(self.seconds_entry, 0, 2)
 
+        self.pulses_entry = QLineEdit()
+        timer_layout.addWidget(self.pulses_entry, 1, 0)
+
         start_stop_layout = QHBoxLayout()
-        timer_layout.addLayout(start_stop_layout, 1, 0, 1, 3)
+        timer_layout.addLayout(start_stop_layout, 2, 0, 1, 3)
 
         self.start_button = QPushButton('Start')
         self.start_button.clicked.connect(self.start_timer)
@@ -103,7 +82,21 @@ class MotorControlGUI(QMainWindow):
         self.stop_button_timer.clicked.connect(self.stop_timer)
         start_stop_layout.addWidget(self.stop_button_timer)
 
-        main_grid.addWidget(timer_group, 1, 0, 1, 2)
+        main_grid.addWidget(timer_group, 0, 1, 2, 1)
+
+        # Encoder value display
+        encoder_group = QGroupBox('Encoder Value')
+        encoder_layout = QVBoxLayout()
+        encoder_group.setLayout(encoder_layout)
+
+        self.encoder_value_label = QLabel('Current Encoder Value: N/A')
+        encoder_layout.addWidget(self.encoder_value_label)
+
+        self.read_encoder_button = QPushButton('Read Encoder Value')
+        self.read_encoder_button.clicked.connect(self.read_encoder)
+        encoder_layout.addWidget(self.read_encoder_button)
+
+        main_grid.addWidget(encoder_group, 0, 2, 1, 1)
 
         # Angle and Pulse Count
         pulse_group = QGroupBox('Set Antenna Angle')
@@ -116,12 +109,12 @@ class MotorControlGUI(QMainWindow):
         self.pulse_entry = QLineEdit()
         pulse_layout.addWidget(self.pulse_entry, 0, 1)
 
-        main_grid.addWidget(pulse_group, 2, 0, 1, 2)
+        main_grid.addWidget(pulse_group, 1, 2, 1, 1)
 
         # Submit Button
         self.submit_button = QPushButton('Submit')
         self.submit_button.clicked.connect(self.submit_parameters)
-        main_grid.addWidget(self.submit_button, 3, 0, 1, 2)
+        main_grid.addWidget(self.submit_button, 2, 2, 1, 1)
 
         # Direction controls
         direction_group = QGroupBox('Direction Controls')
@@ -140,7 +133,7 @@ class MotorControlGUI(QMainWindow):
         self.direction_button.clicked.connect(self.direction_count)
         direction_layout.addWidget(self.direction_button)
 
-        main_grid.addWidget(direction_group, 4, 0, 1, 2)
+        main_grid.addWidget(direction_group, 2, 0, 1, 2)
 
         # Reset Button
         self.reset_button = QPushButton('Reset')
@@ -277,4 +270,3 @@ if __name__ == '__main__':
     window = MotorControlGUI(motor_control)
     window.show()
     sys.exit(app.exec_())
-
